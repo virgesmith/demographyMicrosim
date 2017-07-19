@@ -81,5 +81,4 @@ for (year in 2012:2012) {
   
   print(paste(year,"population",nrow(synpop)))
   print(paste("simulation time(s): ", difftime(Sys.time(), startTime, units="secs")))
-  
 }
