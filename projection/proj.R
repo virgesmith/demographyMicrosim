@@ -29,7 +29,7 @@ mortality=as.data.table(read.csv("./projection/data/TowerHamletsMortality.csv", 
 # perform the microsimulation
 print(paste("2011 population",nrow(synpop)))
 startTime = Sys.time()
-for (year in 2012:2012) {
+for (y in 2012:2021) {
   n = nrow(synpop)
   # add/reset status
   synpop$B = rep(0,n)
@@ -79,6 +79,8 @@ for (year in 2012:2012) {
   # remove the deceased
   synpop = synpop[D != 1]
   
-  print(paste(year,"population",nrow(synpop)))
+  print(paste(y,"population",nrow(synpop)))
   print(paste("simulation time(s): ", difftime(Sys.time(), startTime, units="secs")))
+  
+  write.csv(synpop, paste0("./projection/data/synpop",y,".csv"), row.names = F)
 }
