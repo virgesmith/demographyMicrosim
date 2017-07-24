@@ -45,18 +45,16 @@ for (y in 2012:2021) {
     if (synpop[i,]$Sex == "F") {
       # pick correct fertility rate for age and ethnicity
       fr[i] = fertility[Age==synpop[i,]$Age & Ethnicity==synpop[i,]$Ethnicity]$Rate
-      # if (fr >= xf[i]) {
-      #   synpop[i,]$Status = 2
-      # }
     }
 
     # deaths
     # pick correct mortality rate for sex, age and ethnicity
     mr[i] = mortality[Sex==synpop[i,]$Sex & Age==synpop[i,]$Age & Ethnicity==synpop[i,]$Ethnicity]$Rate
     # death occurs when the random variate is lower than the fertility rate
-    # if (mr >= xm[i]) {
-    #   synpop[i,]$Status = 0
-    # }
+
+    # migration
+    # TODO...
+    
   }
   # births/deaths occur when the random variate is lower than the fertility/mortality rate
   synpop$B = ifelse(fr >= xf, 1, 0)
@@ -82,5 +80,5 @@ for (y in 2012:2021) {
   print(paste(y,"population",nrow(synpop)))
   print(paste("simulation time(s): ", difftime(Sys.time(), startTime, units="secs")))
   
-  write.csv(synpop, paste0("./projection/data/synpop",y,".csv"), row.names = F)
+  write.csv(synpop, paste0("./projection/data/synpop", y, ".csv"), row.names = F)
 }
