@@ -15,19 +15,19 @@ library(leaflet)
 source("./common/map.R")
 source("./common/utils.R")
 
-
 # Load the household synthetic population
 synhomes = as.data.table(read.csv("./households/data/synhomes.csv", stringsAsFactors = F))
 
-msoas = unique(synpop$MSOA)
+msoas = unique(synhomes$MSOA)
 
 density = data.table(MSOA=msoas, Value=rep(-1, length(msoas)))
+flatProp = data.table(MSOA=msoas, Value=rep(-1, length(msoas)))
 
 # calc housing density
 for (msoa in msoas) {
-
+  flatProp[MSOA==msoa]$Value = nrow(synhomes[MSOA==msoa & Type==5]) / nrow(synhomes[MSOA==msoa])
   density[MSOA==msoa]$Value = mean(synhomes[MSOA==msoa & People>0]$People / synhomes[MSOA==msoa & People>0]$Rooms) 
 }
 
-genMap(growth)
+#genMap(density)
 
