@@ -1,19 +1,35 @@
-# usim_demog: Microsimulation for Demography - Worked Examples
+# Microsimulation for Demography - Worked Examples
 
 ## Prerequisites
 
-The code is written in R. We recommend the use of the most recent version of RStudio. Users will need sufficient admin priviledges to install packages.
-The code is dependent on a number of standard (CRAN) packages, such as data.table, sf, leaflet, plotrix, devtools, Rcpp
+The code is written in R. We recommend the use of the most recent version of RStudio and users will need sufficient admin priviledges to install packages. The code is dependent on a number of standard (CRAN) packages, such as data.table, sf, leaflet, plotrix, devtools, Rcpp
 
-The code is also dependent on the humanleague package which is currently available on github, and can be installed using the following command:
+The code is also dependent on the humanleague package which is currently only available on github. It can be installed using the following command:
 ```
-> devtools::install_github("CatchDat/humanleague")
+> devtools::install_github("virgesmith/humanleague")
 ```
 ## Static Microsynthesis
 
-TODO...
+In this example we generate a synthetic population of dwellings in Tower Hamlets, using data from a number of 2011 census tables. The dewllings
+
+### Code
+* [usim.R](households/usim.R) - takes the input data (population aggregates) and synthesises an individual "base" population.  
+
+### Input data
+
+...  
+
+Categories
+* Tenure: Owned (2), Mortgaged/shared (3), Rented social (5), Rented private (6)
+* Type: Detached (2), Semi (3), Terrace (4), Flat/mobile (5), Communal (6)
+* People: 1,2,3,4 (4 means 4 or more)
+* Rooms: 1,2,3,4,5,6 (6 means 6 or more)
+* Bedrooms: 1,2,3,4 (4 means 4 or more)
+* CentHeat: True, False
 
 ## Dynamic Microsynthesis / Microsimulation
+
+In this example we microsynthesise a base human population for Tower Hamlets from 2011 census data, then microsimulate the evoluation of the population given detailed fertility and mortality data.
 
 ### Code
 * [usim.R](projection/usim.R) - takes the input data (population aggregates) and synthesises an individual "base" population.  
@@ -114,7 +130,7 @@ And visualised by calling the function
 In this viusalisation, lower growth is blue and higher orange. It should be noted that the microsimulation is essential to arrive at a result like this - given only fertility and mortality data for the whole borough, we have been able to model growth at a higher geographical resolution thanks to the finer detail provided by census data, namely populations by ethnicity within each MSOA. 
 
 ### Taking it further
-This projection crucially does not take migration into account in order to keep the worked example fairly simple, and the results presented here have little significance.
+This projection omits crucial factors (most notably migration) in order to keep the worked example fairly simple, and the results presented here should not be considered realistic.
 
 Readers are encouraged to clone the code and adapt it for their own use, or improve it. Pull requests are welcomed!
 
