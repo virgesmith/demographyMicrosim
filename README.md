@@ -1,4 +1,4 @@
-# usim_demog - Microsimulation for Demography Worked Examples
+# usim_demog: Microsimulation for Demography - Worked Examples
 
 ## Prerequisites
 
@@ -25,7 +25,7 @@ TODO...
 The input data consists of two distinct datasets: aggregate population data, and fertility/mortality rate data.
 
 #### Aggregate Population Data
-Population aggregate data is sourced from UK census 2011, for the London Borough of Tower Hamlets at middle-layer super output area (MSOA) resolution. MSOA corresponds to a subregion containing approximately 8000 people. Tower Hamlets is split into 32 MSOAs.
+Population aggregate data is sourced from UK census 2011, for the London Borough of Tower Hamlets at middle-layer super output area (MSOA) resolution. MSOA corresponds to a subregion containing approximately 8,000 people. Tower Hamlets is split into 32 MSOAs and its total population is recorded as just over 250,000.
 
 For the purposes of this worked example we have preprocessed the census data into the following csv files:
 
@@ -43,15 +43,77 @@ NB The categories for Ethnicity have been reduced slightly from the original cen
 
 #### Fertility/mortality rate data
 
-Fertility and mortality rate data is taken from the Ethpop database ?ref, and gives rates by ethnicity and single year of age, for the entire borough. (We thus assume that the rates do not vary by MSOA) 
+Fertility and mortality rate data is taken from the Ethpop database ?ref, and gives rates by ethnicity and single year of age, for the entire borough. There is significant variation in the rates for different ethnicities.
 
 ### Methodology
 
-#### Static microsynthesis (usim.R)
-
+#### Static microsynthesis ([usim.R](projection/usim.R))
+To run:
+```
+> source('~/dev/usim_demog/projection/usim.R')
+```
 In this example, microsynthesis is necessary due to the fact that for we have fertility/mortality rates for a single year of age, but census data does not give us ethnicity by single year of age. Using microsynthesis, we can generate a synthetic population that matches both the ethnicity total (by age band) and the population total (by single year of age) for each geographical area and gender. 
 
 For the microsynthesis we use the humanleague R package that generates a population using quasirandom sampling of the marginal data.
 
-#### Projection
+The code can be split into four functional parts:
+1. load the input data and compute various data that will be required later (such as the categories, and a mapping between age band and age)
+2. perform the microsimulations and insert into the the population
+3. perform checks on the synthesised population to ensure consistency with the input data
+4. save the synthetic population for later use in the projection algorithm
+
+The population is saved in the file `./projection/data/synpop.csv`
+
+#### Projection ([proj.R](projection/proj.R))
+To run:
+```
+> source('~/dev/usim_demog/projection/proj.R')
+```
+In this example we project the base population from 2011 to 2021, using a Monte-Carlo simulation to assign births and deaths to the population, using the age- and ethnicity-specific fertility and mortality rates, to generate population foreacsts for ten years. (Whilst there are more efficient ways of projection for this simple example, the aim here is to illustrate the process.) The following assumptions are made:
+* only single births occur (assume that twins etc are factored into the fertility rate)
+* newborn genders are equally probable
+* the ethnicity and MSOA of the newborn is the same as their mother's
+* births occur before deaths - thus a newborn will survive if a parent dies
+* no migration occurs (which is clearly wrong - we leave this as an exercise for the reader)
+
+The code can be split into functional parts:
+1. load the synthetic population from the previous step, as well as the fertility and mortality rates
+2. assign births and deaths to members of the population where the random draws are not greater than the appropriate fertility/mortality rates
+3. age the population by one year
+4. insert newborns (aged zero) and remove dead people 
+5. save the population for later use
+6. repeat from step 2 
+
+The population for each year is saved as `./projection/data/synpop20YY.csv`
+
+#### Visualisation ([graph.R](projection/graph.R),[map.R](projection/map.R))
+To load the graph visualisation functionality:
+```
+> source('~/dev/usim_demog/projection/graph.R')
+```
+The first file provides convenient wrapper function for generating graphs. For example, to view the projected 2021 Bangladeshi population as a pyramid plot:
+```
+> pyramid("BAN", synpop2021, "Bangladeshi - 2021 Projection")
+```
+![](projection/examples/BAN2021pyramid.png)
+
+The second file provides functionality for geographical visualisation file and requires MSOA shapefiles (provided).
+
+There is some example code that computes a diversity measure and overall population growth by MSOA for the 2011 and 2021 (projected) populations. This can be run:
+```
+> source('~/dev/usim_demog/projection/map.R')
+```
+And visualised by calling the function
+```
+> genMap(growth)
+```
+![Map tiles by Carto, under CC BY 3.0. Data by OpenStreetMap, under ODbL](projection/examples/growth2011_2021.png)
+
+In this viusalisation, lower growth is blue and higher orange. It should be noted that the microsimulation is essential to arrive at a result like this - given only fertility and mortality data for the whole borough, we have been able to model growth at a higher geographical resolution thanks to the finer detail provided by census data, namely populations by ethnicity within each MSOA. 
+
+### Taking it further
+This projection crucially does not take migration into account in order to keep the worked example fairly simple, and the results presented here have little significance.
+
+Readers are encouraged to clone the code and adapt it for their own use, or improve it. Pull requests are welcomed!
+
 
