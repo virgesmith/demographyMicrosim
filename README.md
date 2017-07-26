@@ -107,7 +107,9 @@ And visualised by calling the function
 ```
 > genMap(growth)
 ```
-![Map tiles by Carto, under CC BY 3.0. Data by OpenStreetMap, under ODbL](projection/examples/growth2011_2021.png)
+![](projection/examples/growth2011_2021.png)  
+
+###### Map tiles by Carto, under CC BY 3.0. Data by OpenStreetMap, under ODbL  
 
 In this viusalisation, lower growth is blue and higher orange. It should be noted that the microsimulation is essential to arrive at a result like this - given only fertility and mortality data for the whole borough, we have been able to model growth at a higher geographical resolution thanks to the finer detail provided by census data, namely populations by ethnicity within each MSOA. 
 
