@@ -18,6 +18,7 @@ sexAgeEth=as.data.table(read.csv("./projection/data/sexAgeEth.csv", stringsAsFac
 # population by single year of age
 sexAgeYear=as.data.table(read.csv("./projection/data/sexAgeYear.csv", stringsAsFactors = F))
 
+# Generate aggregate totals for the four categories
 msoa=aggregate(sexAgeEth$Persons, by=list(sexAgeEth$MSOA), FUN=sum)
 sex=aggregate(sexAgeEth$Persons, by=list(sexAgeEth$Sex), FUN=sum)
 age=aggregate(sexAgeEth$Persons, by=list(sexAgeEth$Age), FUN=sum)
@@ -31,13 +32,18 @@ ageLookup=data.table(Band=c("0-4","5-7","8-9","10-14","15","16-17","18-19","20-2
 # overall population
 n = sum(sexAgeYear$Persons)
 
+# initialise population table
 synpop=data.table(MSOA=rep("",n), Sex=rep("",n), Age=rep(-1,n), Ethnicity=rep("",n))
 
 index = 1L
 
 # microsim to get sex-age-eth expanded to single year of age, preserving marginal totals in area, sex, age band and ethnicity
+
+# loop over MSOAs
 for (a in msoa$Group.1) {
+  # loop over genders
   for (s in sex$Group.1) {
+    # loop over age bands
     for (b in age$Group.1) {
       # marginal labels
       l1 = sexAgeEth[MSOA==a & Sex==s & Age==b]$Ethnicity
@@ -45,9 +51,10 @@ for (a in msoa$Group.1) {
       # marginal frequencies
       m1 = sexAgeEth[MSOA==a & Sex==s & Age==b]$Persons
       m2 = sexAgeYear[MSOA==a & Sex==s & Age >= ageLookup[Band==b]$LBound & Age <= ageLookup[Band==b]$UBound]$Persons
-      # microsynthesis
+      # microsynthesis (if people exist in MSOA/sex/age combination)
       if (sum(m1)>0) {
         res = humanleague::synthPop(list(m1,m2))
+        # insert into the main population
         for (i in 1:nrow(res$pop)) {
           set(synpop,index,"MSOA", a)
           set(synpop,index,"Sex", s)
