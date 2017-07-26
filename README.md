@@ -27,6 +27,12 @@ Categories
 * Bedrooms: 1,2,3,4 (4 means 4 or more)
 * CentHeat: True, False
 
+![](households/examples/density2011.png)  
+
+###### Map tiles by Carto, under CC BY 3.0. Data by OpenStreetMap, under ODbL  
+
+
+
 ## Dynamic Microsynthesis / Microsimulation
 
 In this example we microsynthesise a base human population for Tower Hamlets from 2011 census data, then microsimulate the evoluation of the population given detailed fertility and mortality data.
