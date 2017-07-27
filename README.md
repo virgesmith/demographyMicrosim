@@ -19,15 +19,15 @@ In this example we generate a synthetic population of dwellings in Tower Hamlets
 
 ### Code
 * [usim.R](households/usim.R) - takes the input data (population aggregates) and synthesises an individual "base" population.  
-* [usim.R](households/map.R) - generates statistics from the sunthethic population that can be visualised on a map.  
+* [map.R](households/map.R) - generates statistics from the synthetic population that can be visualised on a map.  
 
 ### Input data
 
-The input data consists of six datasets derived from 2011 census tables. Note that there are separate tables containing number of rooms and number of bedrooms. Microsynthesis would normally consider categories to be independent, but this assumption will lead to synthesised households with more bedrooms than rooms. As a result we apply an additional constraint to the microsynthesis that number of bedrooms cannot exceed number of rooms.
+The input data consists of six datasets derived from 2011 census tables. Note that there are separate tables containing number of rooms and number of bedrooms. Microsynthesis would normally consider categories to be independent, but this assumption will lead to synthesised households with more bedrooms than rooms. As a result we apply an additional constraint to the microsynthesis - that number of bedrooms cannot exceed number of rooms.
 
 Since little data is available for unoccupied households, we assume that they follow the same distribution of tenure, type, rooms, bedrooms and central heating as occupied households.
 
-Likewise, for communal establishment we do not consider tenure, and assume all are centrally heated.
+For communal establishments we do not consider tenure and assume that all are centrally heated.
 
 * [tenureChType.csv](households/data/tenureChType.csv) - count of households by MSOA by tenure by central heating by dwelling type.
 * [tenurePeopleBeds.csv](households/data/tenurePeopleBeds.csv) - count of households by MSOA by tenure by number of occupants by number of bedrooms.
@@ -46,11 +46,14 @@ Categories
 
 ### Methodology
 
-### Taking it further
+The population is saved in the file `./households/data/synhomes.csv`
 
 ![](households/examples/density2011.png)  
 _Map of household density (average people per room), 2011_ 
 ###### Map tiles by Carto, under CC BY 3.0. Data by OpenStreetMap, under ODbL  
+
+### Taking it further
+...
 
 ## Dynamic Microsynthesis / Microsimulation
 
@@ -60,7 +63,7 @@ In this example we microsynthesise a base human population for Tower Hamlets fro
 * [usim.R](projection/usim.R) - takes the input data (population aggregates) and synthesises an individual "base" population.  
 * [proj.R](projection/proj.R) - takes the microsimulated data from above, then uses more input data (fertility/mortality rates) to project the population.  
 * [graph.R](projection/graph.R) - graphic visualisations of the base and projected populations.  
-* [map.R](projection/map.R) - geographic visualisations of the base and projected populations.  
+* [map.R](projection/map.R) - generates statistics from the synthetic population that can be visualised on a map. 
 
 ### Input data
 The input data consists of two distinct datasets: aggregate population data, and fertility/mortality rate data.
@@ -137,6 +140,8 @@ The first file provides convenient wrapper function for generating graphs. For e
 > pyramid("BAN", synpop2021, "Bangladeshi - 2021 Projection")
 ```
 ![](projection/examples/BAN2021pyramid.png)
+
+_2021 Projected Bangladeshi population pyramid._
 
 The second file provides functionality for geographical visualisation file and requires MSOA shapefiles (provided).
 
