@@ -29,11 +29,10 @@ communalDetail = as.data.table(read.csv("./households/data/communalDetail.csv",s
 
 # Define some lookups that map census codes to meaningful names
 tenureLookup = data.table(Name=c("Owned", "Mortgaged/shared", "Rented social", "Rented private"), Value=c(2,3,5,6))
+
+# TODO append communal residence type/index to this lookup (since we reuse column)
+
 typeLookup = data.table(Name=c("Detached", "Semi", "Terrace", "Flat/mobile", "Communal"), Value = c(2,3,4,5,6))
-# pPerBed:     1 (x<=0.5), 2 (0.5<x<=1) 3 (1<x<=1.5), 4 (1.5<x)
-#ppbNames= c("<=0.5", "(0.5,1]", "(1,1.5]", ">1.5")
-# composition: 1 (single person), 2 (married/civil partnership), 3 (cohabiting), 4 (lone parent), 5(multi-person)
-compositionLookup = data.table(Name=c("Single", "Married/civil", "Cohabiting", "Single Parent", "Multi", "Unoccupied"), Value=c(1,2,3,4,5,6))
 
 # Compute some aggreagate stats
 totalPopulation = sum(communal$Count)
@@ -62,8 +61,6 @@ synhomes=data.table(MSOA=rep("n/a", tableLimit),
                     TypeName=rep("", tableLimit), 
                     Tenure=rep(-1L, tableLimit),
                     TenureName=rep("", tableLimit),
-                    # Composition=rep(-1L, tableLimit),
-                    # CompositionName=rep("", tableLimit),
                     Rooms=rep(-1L, tableLimit),
                     People=rep(-1L, tableLimit),
                     Bedrooms=rep(-1L, tableLimit),
@@ -141,8 +138,6 @@ for (a in msoas) {
             set(synhomes,mainIndex,"Rooms", ir)
             set(synhomes,mainIndex,"People", p)
             set(synhomes,mainIndex,"Bedrooms", ib)
-            #set(synhomes,mainIndex,"PPerBed", occ/ib)
-            #set(synhomes,mainIndex,"PPerBed", peoplePerBedroom(p, ib))
             mainIndex = mainIndex + 1L
           }
         }
@@ -235,12 +230,12 @@ for (a in msoas) {
   stopifnot(nrow(synhomes[MSOA==a]) == sum(tenureChType[MSOA==a]$Count) + sum(communalDetail[MSOA==a]$Count) + sum(unoccupied[MSOA==a & Unoccupied==TRUE]$Count))
 }
 
-# # Populate named columns from category values
-# # TODO surely loop can be avoided?
-# for (i in 1L:nrow(synhomes)) {
-#   set(synhomes, i, "TypeName", typeLookup[synhomes[i]$Type]$Name)
-#   set(synhomes, i, "TenureName", tenureLookup[synhomes[i]$Tenure]$Name)
-# }
+# Populate named columns from category values
+# TODO surely loop can be avoided? this is extremely slow
+for (i in 1L:nrow(synhomes)) {
+  set(synhomes, i, "TypeName", typeLookup[Value==synhomes[i]$Type]$Name)
+  #set(synhomes, i, "TenureName", tenureLookup[Value==synhomes[i]$Tenure]$Name)
+}
 
 # save synthetic population
 write.csv(synhomes, "./households/data/synhomes.csv", row.names = F)
