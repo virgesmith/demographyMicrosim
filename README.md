@@ -8,16 +8,33 @@ The code is also dependent on the humanleague package which is currently only av
 ```
 > devtools::install_github("virgesmith/humanleague")
 ```
+## Common Functionality
+* [graph.R](common/graph.R) - graphic visualisations of data derived from the microsyntheses.  
+* [map.R](common/map.R) - geographic visualisations of data derived from the microsyntheses.  
+* [utils.R](common/utils.R) - helper functions.  
+
 ## Static Microsynthesis
 
-In this example we generate a synthetic population of dwellings in Tower Hamlets, using data from a number of 2011 census tables. The dewllings
+In this example we generate a synthetic population of dwellings in Tower Hamlets, using data from a number of 2011 census tables. Most census tables count only occupied households, and thus omit both communal residences and properties that are unoccupied on the census reference date. Since it is extremely unlikely that all of these properties will remain unoccupied indefinitely, they must be included in any comprehensive reckoning of dwellings. Additionally omission of communal residences can lead to inaccurate models in places where there is a large communal population, e.g. University towns.
 
 ### Code
 * [usim.R](households/usim.R) - takes the input data (population aggregates) and synthesises an individual "base" population.  
+* [usim.R](households/map.R) - generates statistics from the sunthethic population that can be visualised on a map.  
 
 ### Input data
 
-...  
+The input data consists of six datasets derived from 2011 census tables. Note that there are separate tables containing number of rooms and number of bedrooms. Microsynthesis would normally consider categories to be independent, but this assumption will lead to synthesised households with more bedrooms than rooms. As a result we apply an additional constraint to the microsynthesis that number of bedrooms cannot exceed number of rooms.
+
+Since little data is available for unoccupied households, we assume that they follow the same distribution of tenure, type, rooms, bedrooms and central heating as occupied households.
+
+Likewise, for communal establishment we do not consider tenure, and assume all are centrally heated.
+
+* [tenureChType.csv](households/data/tenureChType.csv) - count of households by MSOA by tenure by central heating by dwelling type.
+* [tenurePeopleBeds.csv](households/data/tenurePeopleBeds.csv) - count of households by MSOA by tenure by number of occupants by number of bedrooms.
+* [tenurePeopleRooms.csv](households/data/tenurePeopleRooms.csv) - count of households by MSOA by tenure by number of occupants by number of rooms.
+* [unoccupied.csv](households/data/unoccupied.csv) - count of households by MSOA by whether occupied on census reference date.
+* [communal.csv](households/data/communal.csv) - count of dwelling by MSOA by whether communal establishment or not.
+* [communalDetail.csv](households/data/communalDetail.csv) - count of communal establishments by MSOA by establishment type by total number of occupants.
 
 Categories
 * Tenure: Owned (2), Mortgaged/shared (3), Rented social (5), Rented private (6)
@@ -27,11 +44,13 @@ Categories
 * Bedrooms: 1,2,3,4 (4 means 4 or more)
 * CentHeat: True, False
 
+### Methodology
+
+### Taking it further
+
 ![](households/examples/density2011.png)  
-
+_Map of household density (average people per room), 2011_ 
 ###### Map tiles by Carto, under CC BY 3.0. Data by OpenStreetMap, under ODbL  
-
-
 
 ## Dynamic Microsynthesis / Microsimulation
 
@@ -131,9 +150,11 @@ And visualised by calling the function
 ```
 ![](projection/examples/growth2011_2021.png)  
 
+_Map of projected population growth 2011-2021 (lower growth is blue and higher orange)._
 ###### Map tiles by Carto, under CC BY 3.0. Data by OpenStreetMap, under ODbL  
 
-In this viusalisation, lower growth is blue and higher orange. It should be noted that the microsimulation is essential to arrive at a result like this - given only fertility and mortality data for the whole borough, we have been able to model growth at a higher geographical resolution thanks to the finer detail provided by census data, namely populations by ethnicity within each MSOA. 
+
+It should be noted that the microsimulation is essential to arrive at a result like this - given only fertility and mortality data for the whole borough, we have been able to model growth at a higher geographical resolution thanks to the finer detail provided by census data, namely populations by ethnicity within each MSOA. 
 
 ### Taking it further
 This projection omits crucial factors (most notably migration) in order to keep the worked example fairly simple, and the results presented here should not be considered realistic.
