@@ -4,64 +4,29 @@
 
 The code is written in R. We recommend the use of the most recent version of RStudio and users will need sufficient admin priviledges to install packages. The code is dependent on a number of standard (CRAN) packages, such as data.table, sf, leaflet, plotrix, devtools, Rcpp
 
-The code is also dependent on the humanleague package which is currently only available on github. It can be installed using the following command:
+The code is also dependent on the humanleague package which is currently only available on github. Both can be installed using the following commands:
 ```
 > devtools::install_github("virgesmith/humanleague")
+> devtools::install_github("virgesmith/demographyMicrosim")
 ```
 ## Common Functionality
-* [graph.R](common/graph.R) - graphic visualisations of data derived from the microsyntheses.  
-* [map.R](common/map.R) - geographic visualisations of data derived from the microsyntheses.  
-* [utils.R](common/utils.R) - helper functions.  
+* [graph.R](R/graph.R) - graphic visualisations of data derived from the microsyntheses.  
+* [map.R](R/map.R) - geographic visualisations of data derived from the microsyntheses.  
+* [utils.R](R/utils.R) - helper functions.  
 
-## Static Microsynthesis
-
-In this example we generate a synthetic population of dwellings in Tower Hamlets, using data from a number of 2011 census tables. Most census tables count only occupied households, and thus omit both communal residences and properties that are unoccupied on the census reference date. Since it is extremely unlikely that all of these properties will remain unoccupied indefinitely, they must be included in any comprehensive reckoning of dwellings. Additionally omission of communal residences can lead to inaccurate models in places where there is a large communal population, e.g. University towns.
-
-### Code
-* [usim.R](households/usim.R) - takes the input data (population aggregates) and synthesises an individual "base" population.  
-* [map.R](households/map.R) - generates statistics from the synthetic population that can be visualised on a map.  
-
-### Input data
-
-The input data consists of six datasets derived from 2011 census tables. Note that there are separate tables containing number of rooms and number of bedrooms. Microsynthesis would normally consider categories to be independent, but this assumption will lead to synthesised households with more bedrooms than rooms. As a result we apply an additional constraint to the microsynthesis - that number of bedrooms cannot exceed number of rooms.
-
-Since little data is available for unoccupied households, we assume that they follow the same distribution of tenure, type, rooms, bedrooms and central heating as occupied households.
-
-For communal establishments we do not consider tenure and assume that all are centrally heated.
-
-* [tenureChType.csv](households/data/tenureChType.csv) - count of households by MSOA by tenure by central heating by dwelling type.
-* [tenurePeopleBeds.csv](households/data/tenurePeopleBeds.csv) - count of households by MSOA by tenure by number of occupants by number of bedrooms.
-* [tenurePeopleRooms.csv](households/data/tenurePeopleRooms.csv) - count of households by MSOA by tenure by number of occupants by number of rooms.
-* [unoccupied.csv](households/data/unoccupied.csv) - count of households by MSOA by whether occupied on census reference date.
-* [communal.csv](households/data/communal.csv) - count of dwelling by MSOA by whether communal establishment or not.
-* [communalDetail.csv](households/data/communalDetail.csv) - count of communal establishments by MSOA by establishment type by total number of occupants.
-
-Categories
-* Tenure: Owned (2), Mortgaged/shared (3), Rented social (5), Rented private (6)
-* Type: Detached (2), Semi (3), Terrace (4), Flat/mobile (5), Communal (6)
-* People: 1,2,3,4 (4 means 4 or more)
-* Rooms: 1,2,3,4,5,6 (6 means 6 or more)
-* Bedrooms: 1,2,3,4 (4 means 4 or more)
-* CentHeat: True, False
-
-### Methodology
-
-The population is saved in the file `./households/data/synhomes.csv`
-
-![](households/examples/density2011.png)  
-_Map of household density (average people per room), 2011_ 
-###### Map tiles by Carto, under CC BY 3.0. Data by OpenStreetMap, under ODbL  
-
-### Taking it further
-...
-
-## Dynamic Microsynthesis / Microsimulation
 
 In this example we microsynthesise a base human population for Tower Hamlets from 2011 census data, then microsimulate the evoluation of the population given detailed fertility and mortality data.
 
+## Microsynthesis 
+
+## Microsimulation
+
+
+
 ### Code
-* [usim.R](projection/usim.R) - takes the input data (population aggregates) and synthesises an individual "base" population.  
-* [proj.R](projection/proj.R) - takes the microsimulated data from above, then uses more input data (fertility/mortality rates) to project the population.  
+* [microsynthesis.R](R/microsynthesis.R) - takes the input data (population aggregates) and synthesises an individual "base" population.  
+* [microsimulation.R](R/microsimulation.R) - takes the microsynthesised data from above, then uses more input data (fertility/mortality rates) to project the population.  
+
 * [graph.R](projection/graph.R) - graphic visualisations of the base and projected populations.  
 * [map.R](projection/map.R) - generates statistics from the synthetic population that can be visualised on a map. 
 
