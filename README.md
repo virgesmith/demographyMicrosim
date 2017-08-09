@@ -1,4 +1,7 @@
-# Microsimulation for Demography - Worked Examples
+# Microsimulation for Demography Example
+
+[![Build Status](https://travis-ci.org/virgesmith/demographyMicrosim.png?branch=master)](https://travis-ci.org/virgesmith/demographyMicrosim)
+[![License](http://img.shields.io/badge/license-GPL%20%28%3E=%202%29-brightgreen.svg?style=flat)](http://www.gnu.org/licenses/gpl-3.0.html) 
 
 ## Prerequisites
 
