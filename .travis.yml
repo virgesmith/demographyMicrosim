@@ -1,0 +1,33 @@
+
+language: R
+
+cache: packages
+
+sudo: false
+
+matrix:
+  include:
+    - os: linux
+      dist: trusty
+    - os: osx
+      osx_image: xcode8
+
+warnings_are_errors: false
+
+r_packages:
+  - stringi
+  - digest
+  - devtools
+  - Rcpp
+  - roxygen2
+  - htmltools
+  - rmarkdown
+  - knitr
+  - testthat
+  - yaml
+
+notifications:
+  email:
+    on_success: change
+    on_failure: change
+
