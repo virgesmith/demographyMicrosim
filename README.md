@@ -9,19 +9,19 @@ The code is also dependent on another github package `humanleague` which should 
 > devtools::install_github("virgesmith/humanleague")
 > devtools::install_github("virgesmith/demographyMicrosim")
 ```
-## Code
+## Package Detail
 
 ### Microsynthesis 
 
-* [microsynthesis.R](R/microsynthesis.R) - takes the input data (population aggregates) and synthesises an individual "base" population.  
+* `microsynthesise()` - takes the input data (population aggregates) and synthesises an individual "base" population. See [microsynthesis.R](R/microsynthesis.R) 
 
 ### Microsimulation
-* [microsimulation.R](R/microsimulation.R) - takes the microsynthesised data from above, then uses more input data (fertility/mortality rates) to project the population.  
+* `microsimulate(basePopulation, years)` - takes the microsynthesised data from above, then uses more input data (fertility/mortality rates) to project the population. See [microsimulation.R](R/microsimulation.R).  
 
 ### Common Functionality
-* [graph.R](R/graph.R) - graphic visualisations of data derived from the microsyntheses.
-* [map.R](R/map.R) - geographic visualisations of data derived from the microsyntheses.
-* [utils.R](R/utils.R) - helper functions for calculating a diversity coefficient.
+* `pyramid()` - graphic visualisations of data derived from the microsyntheses. See [graph.R](R/graph.R) for details.
+* `map()` - geographic visualisations of data derived from the microsyntheses. See [map.R](R/map.R) for details. 
+* `diversity(pop), growth(pop0, pop1)` - helper functions for calculating a growth and diversity coefficients. See [utils.R](R/utils.R) for details. 
 
 In this example we microsynthesise a base human population for Tower Hamlets from 2011 census data, then microsimulate the evoluation of the population given detailed fertility and mortality data.
 
@@ -59,7 +59,6 @@ There is significant variation in the rates for different ethnicities, and it is
 ### Geographical Data
 
 This data consists of shapefiles of MSOAs within Tower Hamlets, and is purely for geographic visualisation of the microsimulation results.
-
 
 ## Methodology
 
@@ -122,12 +121,8 @@ The code can be split into functional parts:
 
 The population for each year is saved as `./projection/data/synpop20YY.csv`
 
-#### Visualisation ([graph.R](projection/graph.R),[map.R](projection/map.R))
-To load the graph visualisation functionality:
-```
-> 
-```
-The first file provides convenient wrapper function for generating graphs. For example, to view the projected 2021 Bangladeshi population as a pyramid plot:
+#### Visualisation
+The package provides convenient functions for generating graphs. For example, to view the projected 2021 Bangladeshi population as a pyramid plot:
 ```
 > pyramid("BAN", synpop2021, "Bangladeshi - 2021 Projection")
 ```
