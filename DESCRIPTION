@@ -6,11 +6,11 @@ Description: Microsynthesis and microsimulation worked examples for demography.
 Depends: 
   R (>= 3.4.1),
   data.table,
-  plotrix
+  sf,
+  plotrix,
+  leaflet
 Imports:
   humanleague,
-  sf,
-  leaflet
 License: GPL-v3
 Encoding: UTF-8
 LazyData: true

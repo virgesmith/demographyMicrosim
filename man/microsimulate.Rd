@@ -4,10 +4,10 @@
 \alias{microsimulate}
 \title{Population projection microsimulation}
 \usage{
-microsimulate(synPop, years)
+microsimulate(synpop, years)
 }
 \description{
-This function projects an (synthetic) population from aggregate census data. Members of the population are 
+This function projects an (synthetic) population from aggregate census data. Members of the population are
 categorised by age, sex, ethnicity and geographical location.
 - births are a single child only (assumed that twins etc are accounted for in the fertility rate)
 - newborns are equally likely to be male or female (this may be incorrect esp. for certain ethnicities)
@@ -17,5 +17,5 @@ categorised by age, sex, ethnicity and geographical location.
 }
 \examples{
 synpop = microsynthesise()
-synpop10 = microsimulate(synPop, 10)
+synpop10 = microsimulate(synPop, 6)
 }
