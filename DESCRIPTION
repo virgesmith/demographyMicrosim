@@ -1,0 +1,9 @@
+Package: demographyMicrosim
+Title: Microsynthesis and microsimulation worked examples for demography
+Version: 0.0.0.9000
+Authors@R: person("Andrew", "Smith", email = "a.p.smith@leeds.ac.uk", role = c("aut", "cre"))
+Description: Microsynthesis and microsimulation worked examples for demography.
+Depends: R (>= 3.4.1)
+License: GPL-v3
+Encoding: UTF-8
+LazyData: true
