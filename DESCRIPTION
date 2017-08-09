@@ -5,11 +5,11 @@ Authors@R: person("Andrew", "Smith", email = "a.p.smith@leeds.ac.uk", role = c("
 Description: Microsynthesis and microsimulation worked examples for demography.
 Depends: 
   R (>= 3.4.1),
-  data.table
+  data.table,
+  plotrix
 Imports:
   humanleague,
   sf,
-  plotrix,
   leaflet
 License: GPL-v3
 Encoding: UTF-8

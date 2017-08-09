@@ -7,7 +7,7 @@
 microsynthesise()
 }
 \description{
-This function generates an individual population from aggregate census data. Members of the population are 
+This function generates an individual population from aggregate census data. Members of the population are
 categorised by age, sex, ethnicity and geographical location.
 This file synthesises a population in: MSOA, Sex, Age(single year), Ethnicity
 The input data derive from 2011 census tables containing:

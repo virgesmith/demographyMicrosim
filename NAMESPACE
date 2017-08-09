@@ -2,3 +2,4 @@
 
 export(microsimulate)
 export(microsynthesise)
+export(pyramid)
