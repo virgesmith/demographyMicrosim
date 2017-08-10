@@ -15,16 +15,11 @@ matrix:
 warnings_are_errors: false
 
 r_packages:
-  - stringi
-  - digest
-  - devtools
-  - Rcpp
-  - roxygen2
-  - htmltools
-  - rmarkdown
-  - knitr
-  - testthat
-  - yaml
+  - data.table
+  - units
+  - sf
+  - plotrix
+  - leaflet
 
 notifications:
   email:

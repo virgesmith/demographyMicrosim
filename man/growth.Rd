@@ -12,7 +12,7 @@ growth(pop0, pop1)
 \item{pop1}{a data table containing the final population}
 }
 \value{
-a two colum data table containing the MSOA and the diversity coefficient
+a two column data table containing the MSOA and the diversity coefficient
 }
 \description{
 Calculates growth rate by MSOA between a two synthetic populations

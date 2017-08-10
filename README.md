@@ -12,24 +12,36 @@ The code is also dependent on another github package `humanleague` which should 
 > devtools::install_github("virgesmith/humanleague")
 > devtools::install_github("virgesmith/demographyMicrosim")
 ```
+
+## The Example
+
+In this example we first microsynthesise a base human population for Tower Hamlets from 2011 census data, modelling a population in terms of their geographical location, gender, age and ethnicity.
+
+We then take this synthetic population and microsimulate the evolution of the population using detailed ethnicity-specific fertility and mortality data.
+
+Finally we visualise aspects of the resulting data, such as age distribution, diversity, and population growth.
+
+Detailed instructions on how to do this are given following a brief guide to the package.
+
 ## Package Detail
+
+The R package is self-contained in that it contains all the input data needed for the microsimulation. It possesses the following functionality:
 
 ### Microsynthesis 
 
-* `microsynthesise()` - takes the input data (population aggregates) and synthesises an individual "base" population. See [microsynthesis.R](R/microsynthesis.R) 
+* `microsynthesise()` - takes the input data (population aggregates) and synthesises an individual "base" population. See [microsynthesis.R](R/microsynthesis.R) for more detail.
 
 ### Microsimulation
-* `microsimulate(basePopulation, years)` - takes the microsynthesised data from above, then uses more input data (fertility/mortality rates) to project the population. See [microsimulation.R](R/microsimulation.R).  
+* `microsimulate()` - takes the microsynthesised data from above, then uses more input data (fertility/mortality rates) to project the population. See [microsimulation.R](R/microsimulation.R) for more. NB This computation is time-consuming partly because the code has not been optimised for the sake of readability.
 
 ### Common Functionality
 * `pyramid()` - graphic visualisations of data derived from the microsyntheses. See [graph.R](R/graph.R) for details.
 * `map()` - geographic visualisations of data derived from the microsyntheses. See [map.R](R/map.R) for details. 
-* `diversity(pop), growth(pop0, pop1)` - helper functions for calculating a growth and diversity coefficients. See [utils.R](R/utils.R) for details. 
+* `diversity()`, `growth()` - helper functions for calculating growth and diversity coefficients. See [utils.R](R/utils.R) for details. 
 
-In this example we microsynthesise a base human population for Tower Hamlets from 2011 census data, then microsimulate the evoluation of the population given detailed fertility and mortality data.
 
 ## Input data
-The input data consists of three distinct datasets, which are used for the microsynthesis, the microsimulation, and visualisation. They are described in more detail in the following sections.
+The input data consists of three distinct datasets, which are used (respectively) for the microsynthesis, the microsimulation, and the visualisation. They are described in more detail in the following sections.
  
 ### Aggregate Population Data
 
@@ -93,9 +105,9 @@ The code can be split into three functional parts:
 
 ### Step 2 - Microsimulation (Projection)
 
-Assuming you have already carried out the microsynthesis step above, we can project the population 6 years forward to 2017 using the following:
+Assuming you have already carried out the microsynthesis step above, we can project the population 10 years forward to 2021 using the following:
 ```
-> population3 = microsimulate(basePopulation, 3)
+> population2021 = microsimulate(basePopulation, 10)
 base population: 254096 
 Projecting: T+1...done
 T+1 population 258274
