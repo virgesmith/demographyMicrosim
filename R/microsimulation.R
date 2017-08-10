@@ -3,7 +3,7 @@
 # uses fertility and mortality data by local authority, age and ethnicity
 
 
-#' Population projection microsimulation
+#' microsimulate
 #'
 #' This function projects an (synthetic) population from aggregate census data. Members of the population are
 #' categorised by age, sex, ethnicity and geographical location.
@@ -12,10 +12,12 @@
 #' - ethnicity of newborn is the same as mother (in the absence of other information)
 #' - the death rate for age zero is the average of the rate of stillbirths and deaths under one year
 #' - births supersede deaths: thus a person who gives birth and dies in a single year will have a surviving child
+#' @param basePopulation a dataframe containing the base population to be projected
+#' @param years a number of years to run the simulation
 #' @export
 #' @examples
-#' synpop = microsynthesise()
-#' synpop10 = microsimulate(synPop, 6)
+#' populationT0 = microsynthesise()
+#' populationT6 = microsimulate(populationT0, 6)
 microsimulate = function(synpop, years) {
 
   # TODO check years>0

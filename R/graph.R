@@ -1,10 +1,15 @@
 
-#' Produce a pyramid plot for a particular ethnicity
+#' pyramid
 #'
+#' Produces a pyramid plot for a particular ethnicity
+#' @param eth a three-letter string identifying the ethnicity
+#' @param population the overall population
+#' @param title and optional title for the graph
 #' @export
 #' @examples
-#' synpop = pyramid("BAN", synpop11, "Tower Hamlets Bangladeshi population 2011")
-pyramid = function(eth, population, title) {
+#' p = microsynthesise()
+#' pyramid("BAN", p, "Tower Hamlets Bangladeshi population 2011")
+pyramid = function(eth, population, title = "") {
 
   # mapping from age bands to age ranges
   ageLookup=data.table(Band=c("0-4","5-9","10-14","15-19","20-24","25-29","30-34","35-39","40-44","45-49","50-54","55-59","60-64","65-69","70-74","75-79","80-84","85+"),

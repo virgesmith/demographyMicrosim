@@ -2,12 +2,20 @@
 % Please edit documentation in R/utils.R
 \name{growth}
 \alias{growth}
-\title{Calculates growth rate by MSOA between population projections}
+\title{growth}
 \usage{
 growth(pop0, pop1)
 }
+\arguments{
+\item{pop0}{a data table containing the initial population}
+
+\item{pop1}{a data table containing the final population}
+}
+\value{
+a two colum data table containing the MSOA and the diversity coefficient
+}
 \description{
-Calculates growth rate by MSOA between population projections
+Calculates growth rate by MSOA between a two synthetic populations
 }
 \examples{
 basepop = microsynthesise()

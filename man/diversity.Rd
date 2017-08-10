@@ -2,14 +2,23 @@
 % Please edit documentation in R/utils.R
 \name{diversity}
 \alias{diversity}
-\title{Calculates a diversity coefficient for a population, grouped by by MSOA}
+\title{diversity}
 \usage{
 diversity(synpop)
 }
+\arguments{
+\item{population}{the synthesised or projected population}
+}
+\value{
+a two colum data table containing the MSOA and the diversity coefficient
+}
 \description{
 Calculates a diversity coefficient for a population, grouped by by MSOA
+The coefficient is related to the normalised variance of the population
+and will range from  0 (if only one ethnicity is present) to 1 (if equal
+populations of each ethnicity).
 }
 \examples{
-synpop = microsynthesise()
-diversity = diversity(synPop)
+p = microsynthesise()
+d = diversity(d)
 }

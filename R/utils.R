@@ -13,11 +13,18 @@ diversityCoeff = function(pop) {
   return((1 - p %*% p)*n/(n-1))
 }
 
+#' diversity
+#'
 #' Calculates a diversity coefficient for a population, grouped by by MSOA
+#' The coefficient is related to the normalised variance of the population
+#' and will range from  0 (if only one ethnicity is present) to 1 (if equal
+#' populations of each ethnicity).
+#' @param population the synthesised or projected population
+#' @return a two colum data table containing the MSOA and the diversity coefficient
 #' @export
 #' @examples
-#' synpop = microsynthesise()
-#' diversity = diversity(synPop)
+#' p = microsynthesise()
+#' d = diversity(d)
 diversity = function(synpop) {
   # get the MSOAs and ethnicities
   msoas = unique(synpop$MSOA)
@@ -36,7 +43,12 @@ diversity = function(synpop) {
   return(div)
 }
 
-#' Calculates growth rate by MSOA between population projections
+#' growth
+#'
+#' Calculates growth rate by MSOA between a two synthetic populations
+#' @param pop0 a data table containing the initial population
+#' @param pop1 a data table containing the final population
+#' @return a two column data table containing the MSOA and the diversity coefficient
 #' @export
 #' @examples
 #' basepop = microsynthesise()

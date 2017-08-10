@@ -2,9 +2,14 @@
 % Please edit documentation in R/microsimulation.R
 \name{microsimulate}
 \alias{microsimulate}
-\title{Population projection microsimulation}
+\title{microsimulate}
 \usage{
 microsimulate(synpop, years)
+}
+\arguments{
+\item{years}{a number of years to run the simulation}
+
+\item{basePopulation}{a dataframe containing the base population to be projected}
 }
 \description{
 This function projects an (synthetic) population from aggregate census data. Members of the population are
@@ -16,6 +21,6 @@ categorised by age, sex, ethnicity and geographical location.
 - births supersede deaths: thus a person who gives birth and dies in a single year will have a surviving child
 }
 \examples{
-synpop = microsynthesise()
-synpop10 = microsimulate(synPop, 6)
+populationT0 = microsynthesise()
+populationT6 = microsimulate(populationT0, 6)
 }

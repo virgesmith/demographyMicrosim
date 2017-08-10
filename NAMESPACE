@@ -2,6 +2,7 @@
 
 export(diversity)
 export(growth)
+export(map)
 export(microsimulate)
 export(microsynthesise)
 export(pyramid)

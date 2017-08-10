@@ -2,7 +2,7 @@
 % Please edit documentation in R/microsynthesis.R
 \name{microsynthesise}
 \alias{microsynthesise}
-\title{Population microsynthesis}
+\title{microsynthesise}
 \usage{
 microsynthesise()
 }
@@ -10,7 +10,7 @@ microsynthesise()
 This function generates an individual population from aggregate census data. Members of the population are
 categorised by age, sex, ethnicity and geographical location.
 This file synthesises a population in: MSOA, Sex, Age(single year), Ethnicity
-The input data derive from 2011 census tables containing:
+The input data are loaded automatically and derive from 2011 census tables containing:
   Aggregates of Persons per MSOA, Sex, Age(band) and Ethnicity
   Aggregates of Persons per MSOA, Sex, Age(single year)
 }

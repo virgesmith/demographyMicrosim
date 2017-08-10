@@ -2,13 +2,21 @@
 % Please edit documentation in R/graph.R
 \name{pyramid}
 \alias{pyramid}
-\title{Produce a pyramid plot for a particular ethnicity}
+\title{pyramid}
 \usage{
-pyramid(eth, population, title)
+pyramid(eth, population, title = "")
+}
+\arguments{
+\item{eth}{a three-letter string identifying the ethnicity}
+
+\item{population}{the overall population}
+
+\item{title}{and optional title for the graph}
 }
 \description{
-Produce a pyramid plot for a particular ethnicity
+Produces a pyramid plot for a particular ethnicity
 }
 \examples{
-synpop = pyramid("BAN", synpop11, "Tower Hamlets Bangladeshi population 2011")
+p = microsynthesise()
+pyramid("BAN", p, "Tower Hamlets Bangladeshi population 2011")
 }
