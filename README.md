@@ -125,42 +125,68 @@ This will take around 1 minute, depending on the hardware used. We can save this
 
 Assuming you have already carried out the microsynthesis step above, we can project the population 10 years forward to 2021 using the following:
 ```
-> population2021 = microsimulate(basePopulation, 10)
+> population2021=microsimulate(basePopulation, 10)
 base population: 254096 
 Projecting: T+1...done
-T+1 population 258274
-Total simulation time(s):  339.806096315384 
+T+1 population 258258
+Overall simulation time(s):  483.934171915054 
 Projecting: T+2...done
-T+2 population 262393
-Total simulation time(s):  680.060456752777 
+T+2 population 262457
+Overall simulation time(s):  998.115595817566 
 Projecting: T+3...done
-T+3 population 266528
-Total simulation time(s):  1029.03516221046 
+T+3 population 266636
+Overall simulation time(s):  1478.55320763588 
+Projecting: T+4...done
+T+4 population 270776
+Overall simulation time(s):  1946.82198834419 
+Projecting: T+5...done
+T+5 population 274769
+Overall simulation time(s):  2412.15490603447 
+Projecting: T+6...done
+T+6 population 278822
+Overall simulation time(s):  2883.71858787537 
+Projecting: T+7...done
+T+7 population 282631
+Overall simulation time(s):  3374.62547659874 
+Projecting: T+8...done
+T+8 population 286393
+Overall simulation time(s):  3880.97138023376 
+Projecting: T+9...done
+T+9 population 289969
+Overall simulation time(s):  4399.07802438736 
+Projecting: T+10...done
+T+10 population 293492
+Overall simulation time(s):  4919.74568200111 
 ```
-The projection for 10 years will take approximately one hour, so it's definitely worth saving this population for later use:
+The projection for 10 years is may take well over an hour, so it's definitely worth saving this population for later use:
 ```
 > write.csv(population2021, "population2021.csv", row.names=FALSE)
 ```
 
-#### Visualisation
-The package provides convenient functions for generating graphs. For example, to view the projected 2021 Bangladeshi population as a pyramid plot:
+#### Visualising the Results
+The package provides convenient functions for generating graphs. For example, to reload the population projection and view the projected 2021 Bangladeshi population as a pyramid plot:
 ```
+> population2021 = as.data.table(read.csv("population2021.csv", stringsAsFactors = FALSE))
 > pyramid("BAN", population2021, "Bangladeshi - 2021 Projection")
 ```
+Which should look like this:
+
 ![](examples/BAN2021pyramid.png)
 
-_2021 Projected Bangladeshi population pyramid._
+_2021 Projected Bangladeshi population._
 
-The second file provides functionality for geographical visualisation file and requires MSOA shapefiles (provided).
+We can also now compute some statistics to help us understand the population and how it has evolved.
 
-There is some example code that computes a diversity measure and overall population growth by MSOA for the 2011 and 2021 (projected) populations. This can be run:
 ```
 > div = diversity(population2021)
+> grth = growth(basePopulation, population2021)
 ```
-And visualised by calling the function
+Either of which can be visualised on a map using the `map` function, e.g.
 ```
-> genMap(growth)
+> map(grth)
 ```
+Which results in
+
 ![](examples/growth2011_2021.png)  
 ###### Map tiles by Carto, under CC BY 3.0. Data by OpenStreetMap, under ODbL  
 _Map of projected population growth 2011-2021 (lower growth is blue and higher orange)._
@@ -168,9 +194,9 @@ _Map of projected population growth 2011-2021 (lower growth is blue and higher o
 
 It should be noted that the microsimulation is essential to arrive at a result like this - given only fertility and mortality data for the whole borough, we have been able to model growth at a higher geographical resolution thanks to the finer detail provided by census data, namely populations by ethnicity within each MSOA. 
 
-### Taking it further
+### Taking it Further
 This projection omits crucial factors (most notably migration) in order to keep the worked example fairly simple, and the results presented here should not be considered realistic.
 
-Readers are encouraged to clone the code and adapt it for their own use, or improve it. Pull requests are welcomed!
+Readers are encouraged to clone this repo, adapt/extend it for their own use and/or improve it. Pull requests are welcomed!
 
 

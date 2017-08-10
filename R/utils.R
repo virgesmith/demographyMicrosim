@@ -56,12 +56,12 @@ diversity = function(synpop) {
 #' g = growth(basePop, projpop)
 growth = function(pop0, pop1) {
   # get the MSOAs
-  msoas = unique(synpop$MSOA)
+  msoas = unique(pop0$MSOA)
 
   # preallocate the table
   g = data.table(MSOA=msoas, Value=rep(-1, length(msoas)))
   for (msoa in msoas) {
-    g[MSOA==msoa]$Value = nrow(pop0[MSOA==msoa]) / nrow(pop0[MSOA==msoa]) - 1.0
+    g[MSOA==msoa]$Value = nrow(pop1[MSOA==msoa]) / nrow(pop0[MSOA==msoa]) - 1.0
   }
   return(g)
 }
