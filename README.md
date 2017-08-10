@@ -29,10 +29,37 @@ The R package is self-contained in that it contains all the input data needed fo
 
 ### Microsynthesis 
 
-* `microsynthesise()` - takes the input data (population aggregates) and synthesises an individual "base" population. See [microsynthesis.R](R/microsynthesis.R) for more detail.
+* `microsynthesise()` - takes the input data (population aggregates) and synthesises an individual "base" population. 
+
+In this example, microsynthesis is necessary due to the fact that we have fertility/mortality rates for a single year of age, and census data does not give us ethnicity by single year of age. Using microsynthesis, we can generate a synthetic population that enumerates both ethnicity and single year of age for every individual. Moreover, this population is entirely consistent with the input data: it will match both the ethnicity totals (by age band) and the population totals (by single year of age) for each geographical area and gender. 
+
+For the microsynthesis we use the humanleague R package that generates a population using quasirandom sampling of the marginal data.
+
+The algorithm can be has three functional parts:
+1. load the input data and compute various data that will be required later (such as the categories, .and a mapping between age band and age)
+2. perform microsyntheses for each geographical area and insert into the the population
+3. perform checks on the synthesised population to ensure it is consistent with the input data
+See [microsynthesis.R](R/microsynthesis.R) for more detail.
 
 ### Microsimulation
-* `microsimulate()` - takes the microsynthesised data from above, then uses more input data (fertility/mortality rates) to project the population. See [microsimulation.R](R/microsimulation.R) for more. NB This computation is time-consuming partly because the code has not been optimised for the sake of readability.
+- `microsimulate()` - takes the microsynthesised data from above, then uses more input data (fertility/mortality rates) to project the population. 
+
+In this example we project the base population from 2011 to 2021, using a Monte-Carlo simulation to assign births and deaths to the population, using the age- and ethnicity-specific fertility and mortality rates, to generate population foreacsts for ten years. (Whilst there are more efficient ways of projection for this simple example, the aim here is to illustrate the process.) The following assumptions are made:
+
+- only single births occur (assume that twins etc are factored into the fertility rate)
+- newborn genders are equally probable
+- the ethnicity and MSOA of the newborn is the same as their mother's
+- births occur before deaths - thus a newborn will survive if a parent dies within the same year
+- no migration occurs (this
+
+The algorithm can be qualitatively described as follows:
+1. load the fertility and mortality rates
+2. assign births and deaths to members of the population randomly, but consistent with fertility/mortality rates
+3. age the population by one year
+4. insert newborns (aged zero) and remove dead people 
+5. repeat from step 2 until the target year is reached.
+
+See [microsimulation.R](R/microsimulation.R) for more. NB This computation is time-consuming partly because the code has not been optimised for the sake of readability.
 
 ### Common Functionality
 * `pyramid()` - graphic visualisations of data derived from the microsyntheses. See [graph.R](R/graph.R) for details.
@@ -94,15 +121,6 @@ This will take around 1 minute, depending on the hardware used. We can save this
 (The final argument stops R from inserting an index column into the saved data, which we do not require.) 
 
 
-In this example, microsynthesis is necessary due to the fact that we have fertility/mortality rates for a single year of age, but census data does not give us ethnicity by single year of age. Using microsynthesis, we can generate a synthetic population that enumerates both ethnicity and single year of age for every individual. Moreover, this population is entirely consistent with the input data: it matches both the ethnicity total (by age band) and the population total (by single year of age) for each geographical area and gender. 
-
-[shameless plug] For the microsynthesis we use the humanleague R package that generates a population using quasirandom sampling of the marginal data.
-
-The code can be split into three functional parts:
-1. load the input data and compute various data that will be required later (such as the categories, .and a mapping between age band and age)
-2. perform microsyntheses for each geographical area and insert into the the population
-3. perform checks on the synthesised population to ensure it is consistent with the input data
-
 ### Step 2 - Microsimulation (Projection)
 
 Assuming you have already carried out the microsynthesis step above, we can project the population 10 years forward to 2021 using the following:
@@ -119,27 +137,15 @@ Projecting: T+3...done
 T+3 population 266528
 Total simulation time(s):  1029.03516221046 
 ```
-In this example we project the base population from 2011 to 2021, using a Monte-Carlo simulation to assign births and deaths to the population, using the age- and ethnicity-specific fertility and mortality rates, to generate population foreacsts for ten years. (Whilst there are more efficient ways of projection for this simple example, the aim here is to illustrate the process.) The following assumptions are made:
-* only single births occur (assume that twins etc are factored into the fertility rate)
-* newborn genders are equally probable
-* the ethnicity and MSOA of the newborn is the same as their mother's
-* births occur before deaths - thus a newborn will survive if a parent dies
-* no migration occurs (which is clearly wrong - we leave this as an exercise for the reader)
-
-The code can be split into functional parts:
-1. load the synthetic population from the previous step, as well as the fertility and mortality rates
-2. assign births and deaths to members of the population where the random draws are not greater than the appropriate fertility/mortality rates
-3. age the population by one year
-4. insert newborns (aged zero) and remove dead people 
-5. save the population for later use
-6. repeat from step 2 
-
-The population for each year is saved as `./projection/data/synpop20YY.csv`
+The projection for 10 years will take approximately one hour, so it's definitely worth saving this population for later use:
+```
+> write.csv(population2021, "population2021.csv", row.names=FALSE)
+```
 
 #### Visualisation
 The package provides convenient functions for generating graphs. For example, to view the projected 2021 Bangladeshi population as a pyramid plot:
 ```
-> pyramid("BAN", synpop2021, "Bangladeshi - 2021 Projection")
+> pyramid("BAN", population2021, "Bangladeshi - 2021 Projection")
 ```
 ![](examples/BAN2021pyramid.png)
 
@@ -156,9 +162,8 @@ And visualised by calling the function
 > genMap(growth)
 ```
 ![](examples/growth2011_2021.png)  
-
-_Map of projected population growth 2011-2021 (lower growth is blue and higher orange)._
 ###### Map tiles by Carto, under CC BY 3.0. Data by OpenStreetMap, under ODbL  
+_Map of projected population growth 2011-2021 (lower growth is blue and higher orange)._
 
 
 It should be noted that the microsimulation is essential to arrive at a result like this - given only fertility and mortality data for the whole borough, we have been able to model growth at a higher geographical resolution thanks to the finer detail provided by census data, namely populations by ethnicity within each MSOA. 

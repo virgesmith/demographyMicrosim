@@ -16,6 +16,7 @@ warnings_are_errors: false
 
 r_packages:
   - data.table
+  - udunits2
   - units
   - sf
   - plotrix
