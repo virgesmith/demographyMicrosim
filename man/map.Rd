@@ -18,7 +18,7 @@ a column "Value" containing numeric data to be plotted}
 Displays a map outlining the MSOAs within Tower Hamlets, filling with a colour derived from the supplied data
 }
 \examples{
-p = microsimulate()
+p = microsynthesise()
 d = diversity(p)
 m = map(d)
 }

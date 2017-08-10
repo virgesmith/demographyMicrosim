@@ -8,15 +8,13 @@
 #' The input data are loaded automatically and derive from 2011 census tables containing:
 #'   Aggregates of Persons per MSOA, Sex, Age(band) and Ethnicity
 #'   Aggregates of Persons per MSOA, Sex, Age(single year)
+#' @return a data.table containing the synthetic population
 #' @export
 #' @examples
 #' synpop = microsynthesise()
 microsynthesise = function() {
 
-  # load in the aggregates derived from census data# population by sex, age band, ethnicity
-  data(sexAgeEth)
-  # population by single year of age
-  data(sexAgeYear)
+  # makes use of the following lazy-loaded package data: sexAgeEth, sexAgeYear
 
   cat(paste("Population: ", sum(sexAgeEth$Persons), "\n"))
   cat("Starting microsynthesis...")

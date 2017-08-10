@@ -7,7 +7,7 @@
 diversity(synpop)
 }
 \arguments{
-\item{population}{the synthesised or projected population}
+\item{synpop}{the synthesised or projected population}
 }
 \value{
 a two colum data table containing the MSOA and the diversity coefficient
@@ -20,5 +20,5 @@ populations of each ethnicity).
 }
 \examples{
 p = microsynthesise()
-d = diversity(d)
+d = diversity(p)
 }

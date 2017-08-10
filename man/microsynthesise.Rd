@@ -6,6 +6,9 @@
 \usage{
 microsynthesise()
 }
+\value{
+a data.table containing the synthetic population
+}
 \description{
 This function generates an individual population from aggregate census data. Members of the population are
 categorised by age, sex, ethnicity and geographical location.

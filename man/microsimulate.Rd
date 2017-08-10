@@ -7,9 +7,12 @@
 microsimulate(synpop, years)
 }
 \arguments{
-\item{years}{a number of years to run the simulation}
+\item{synpop}{a dataframe containing the base population to be projected}
 
-\item{basePopulation}{a dataframe containing the base population to be projected}
+\item{years}{a number of years to run the simulation}
+}
+\value{
+a data.table containing the projected population
 }
 \description{
 This function projects an (synthetic) population from aggregate census data. Members of the population are
@@ -21,6 +24,8 @@ categorised by age, sex, ethnicity and geographical location.
 - births supersede deaths: thus a person who gives birth and dies in a single year will have a surviving child
 }
 \examples{
-populationT0 = microsynthesise()
-populationT6 = microsimulate(populationT0, 6)
+\dontrun{
+synpop = microsynthesise()
+projpop = microsimulate(synpop, 10)
+}
 }

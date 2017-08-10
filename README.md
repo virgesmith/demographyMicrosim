@@ -81,7 +81,7 @@ For the purposes of this worked example we have preprocessed the census data int
 * [sexAgeEth.csv](data/sexAgeEth.csv) - count of persons by MSOA by sex by age band by ethnicity
 * [sexAgeYear.csv](data/sexAgeYear.csv) - count of persons by MSOA by sex by single year of age by ethnicity
 
-#### Categories:
+### Categories:
 - MSOA: ONS code for the 32 MSOAs within Tower Hamlets
 - Sex: M/F
 - Age Band: 0-4, 5-7, 8-9, 10-14, 15, 16-17, 18-19, 20-24, 25-29, 30-34, 35-39, 40-44, 45-49, 50-54, 55-59, 60-64, 65-69, 70-74, 75-79, 80-84, 85+
@@ -163,7 +163,7 @@ The projection for 10 years is may take well over an hour, so it's definitely wo
 > write.csv(population2021, "population2021.csv", row.names=FALSE)
 ```
 
-#### Visualising the Results
+### Step 3 - Visualising the Results
 The package provides convenient functions for generating graphs. For example, to reload the population projection and view the projected 2021 Bangladeshi population as a pyramid plot:
 ```
 > population2021 = as.data.table(read.csv("population2021.csv", stringsAsFactors = FALSE))
@@ -187,14 +187,14 @@ Either of which can be visualised on a map using the `map` function, e.g.
 ```
 Which results in
 
-![](examples/growth2011_2021.png)  
+![](examples/growth2011_2021.png) 
 ###### Map tiles by Carto, under CC BY 3.0. Data by OpenStreetMap, under ODbL  
 _Map of projected population growth 2011-2021 (lower growth is blue and higher orange)._
 
 
 It should be noted that the microsimulation is essential to arrive at a result like this - given only fertility and mortality data for the whole borough, we have been able to model growth at a higher geographical resolution thanks to the finer detail provided by census data, namely populations by ethnicity within each MSOA. 
 
-### Taking it Further
+## Taking it Further
 This projection omits crucial factors (most notably migration) in order to keep the worked example fairly simple, and the results presented here should not be considered realistic.
 
 Readers are encouraged to clone this repo, adapt/extend it for their own use and/or improve it. Pull requests are welcomed!

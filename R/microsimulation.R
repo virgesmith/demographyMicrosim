@@ -12,19 +12,21 @@
 #' - ethnicity of newborn is the same as mother (in the absence of other information)
 #' - the death rate for age zero is the average of the rate of stillbirths and deaths under one year
 #' - births supersede deaths: thus a person who gives birth and dies in a single year will have a surviving child
-#' @param basePopulation a dataframe containing the base population to be projected
+#' @param synpop a dataframe containing the base population to be projected
 #' @param years a number of years to run the simulation
+#' @return a data.table containing the projected population
 #' @export
 #' @examples
-#' populationT0 = microsynthesise()
-#' populationT6 = microsimulate(populationT0, 6)
+#' \dontrun{
+#' synpop = microsynthesise()
+#' projpop = microsimulate(synpop, 10)
+#' }
 microsimulate = function(synpop, years) {
 
-  # TODO check years>0
+  # years must be strictly positive
+  stopifnot(years>0)
 
-  # Load fertility and mortality rates for Tower Hamlets
-  data(TowerHamletsFertility)
-  data(TowerHamletsMortality)
+  # makes use of the following lazy-loaded package data: TowerHamletsFertility, TowerHamletsMortality
 
   # two status columns will be added to the population to flag birth and death events
 

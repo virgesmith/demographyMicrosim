@@ -18,7 +18,9 @@ a two column data table containing the MSOA and the diversity coefficient
 Calculates growth rate by MSOA between a two synthetic populations
 }
 \examples{
+\dontrun{
 basepop = microsynthesise()
-projpop = microsimulate(basepop,1)
+projpop = microsimulate(basepop,10)
 g = growth(basePop, projpop)
+}
 }
