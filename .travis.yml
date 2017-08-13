@@ -1,5 +1,9 @@
 
-language: R
+# see https://docs.travis-ci.com/user/languages/r/ 
+
+language: r
+  - release
+  - devel
 
 cache: packages
 
@@ -21,6 +25,9 @@ r_packages:
   - sf
   - plotrix
   - leaflet
+  
+r_github_packages:
+  - virgesmith/humanleague
 
 notifications:
   email:
