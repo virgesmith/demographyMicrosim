@@ -1,35 +1,22 @@
-# Microsimulation for Demography Example
+# Microsimulation for Demography Examples
 
 [![Build Status](https://travis-ci.org/virgesmith/demographyMicrosim.png?branch=master)](https://travis-ci.org/virgesmith/demographyMicrosim)
 [![License](http://img.shields.io/badge/license-GPL%20%28%3E=%202%29-brightgreen.svg?style=flat)](http://www.gnu.org/licenses/gpl-3.0.html) 
 
-## Prerequisites
 
-The code is contained in an R package. We recommend the use of the most recent version of RStudio and users will need sufficient admin privileges to install packages. 
+## The Examples
 
-The code is also dependent on another github package `humanleague` which should be installed first. The following commands will install everything you need:
-```
-> devtools::install_github("virgesmith/humanleague")
-> devtools::install_github("virgesmith/demographyMicrosim")
-```
-The code also depends on some standard R packages, which - if not already present - can be installed like so:
-```
-> install.packages(c("data.table", "sf", "plotrix", "leaflet"))
-```
+In the the first example we microsynthesise a base human population for the London Borough of Tower Hamlets from 2011 census data, modelling a population in terms of their geographical location, gender, age and ethnicity.
 
-## The Example
+In the second example we take the synthetic population from the first step and microsimulate its evolution using detailed ethnicity-specific fertility and mortality data.
 
-In this example we first microsynthesise a base human population for Tower Hamlets from 2011 census data, modelling a population in terms of their geographical location, gender, age and ethnicity.
+Thirdly we demonstrate ways to visualise aspects of the resulting data, such as age distribution, diversity, and population growth.
 
-We then take this synthetic population and microsimulate the evolution of the population using detailed ethnicity-specific fertility and mortality data.
-
-Finally we visualise aspects of the resulting data, such as age distribution, diversity, and population growth.
-
-We describe of the contents of the package, followed by detailed instructions on how to do this are given following a brief guide to the package.
+In the following sections we first give a detailed description of data and methodology, followed by step-by-step usage instructions, and some example illustrations from the results.
 
 ## Package Overview
 
-The R package is self-contained in that it contains all the code and input data needed for the microsimulation. 
+The package is self-contained in that it contains all the code and input data needed for the microsimulation. 
 
 ### Input data
 The input data consists of three distinct datasets, which are used (respectively) for the microsynthesis, the microsimulation, and the visualisation. They are described in more detail in the following sections.
@@ -66,7 +53,7 @@ There is significant variation in the rates for different ethnicities, and it is
 
 This data consists of shapefiles of MSOAs within Tower Hamlets, and is purely for geographic visualisation of the microsimulation results.
 
-### Functionality
+### Methodology
 
 #### Microsynthesis 
 
@@ -113,6 +100,20 @@ See [microsimulation.R](R/microsimulation.R) for more detail. NB This computatio
 
 
 ## Using the Package
+
+### Installation
+
+The code is contained in an R package. We recommend the use of the most recent version of RStudio and users will need sufficient admin privileges to install packages. 
+
+The code is also dependent on another github package `humanleague` which should be installed first. The following commands will install everything you need:
+```
+> devtools::install_github("virgesmith/humanleague")
+> devtools::install_github("virgesmith/demographyMicrosim")
+```
+The code also depends on some standard R packages, which - if not already present - can be installed like so:
+```
+> install.packages(c("data.table", "sf", "plotrix", "leaflet"))
+```
 
 ### Step 1 - Static microsynthesis
 
