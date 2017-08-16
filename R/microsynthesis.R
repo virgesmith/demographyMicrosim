@@ -22,7 +22,7 @@ microsynthesise = function() {
   # Generate aggregate totals for the four categories
   msoa=aggregate(sexAgeEth$Persons, by=list(sexAgeEth$MSOA), FUN=sum)
   sex=aggregate(sexAgeEth$Persons, by=list(sexAgeEth$Sex), FUN=sum)
-  age=aggregate(sexAgeEth$Persons, by=list(sexAgeEth$Age), FUN=sum)
+  age=aggregate(sexAgeEth$Persons, by=list(sexAgeEth$AgeBand), FUN=sum)
   eth=aggregate(sexAgeEth$Persons, by=list(sexAgeEth$Ethnicity), FUN=sum)
 
   # mapping from age bands to age ranges
@@ -47,10 +47,10 @@ microsynthesise = function() {
       # loop over age bands
       for (b in age$Group.1) {
         # marginal labels
-        l1 = sexAgeEth[sexAgeEth$MSOA==a & sexAgeEth$Sex==s & sexAgeEth$Age==b,]$Ethnicity
+        l1 = sexAgeEth[sexAgeEth$MSOA==a & sexAgeEth$Sex==s & sexAgeEth$AgeBand==b,]$Ethnicity
         l2 = sexAgeYear[sexAgeYear$MSOA==a & sexAgeYear$Sex==s & sexAgeYear$Age >= ageLookup[Band==b]$LBound & sexAgeYear$Age <= ageLookup[Band==b]$UBound,]$Age
         # marginal frequencies
-        m1 = sexAgeEth[sexAgeEth$MSOA==a & sexAgeEth$Sex==s & sexAgeEth$Age==b,]$Persons
+        m1 = sexAgeEth[sexAgeEth$MSOA==a & sexAgeEth$Sex==s & sexAgeEth$AgeBand==b,]$Persons
         m2 = sexAgeYear[sexAgeYear$MSOA==a & sexAgeYear$Sex==s & sexAgeYear$Age >= ageLookup[Band==b]$LBound & sexAgeYear$Age <= ageLookup[Band==b]$UBound,]$Persons
         # microsynthesis (if people exist in MSOA/sex/age combination)
         if (sum(m1)>0) {
