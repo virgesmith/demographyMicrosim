@@ -25,12 +25,12 @@ The input data consists of three distinct datasets, which are used (respectively
 
 This data is used to generate a synthetic population.
 
-Population aggregate data is sourced from UK census 2011, for the London Borough of Tower Hamlets at middle-layer super output area (MSOA) resolution. MSOA corresponds to a subregion containing approximately 8,000 people. Tower Hamlets is split into 32 MSOAs and its total population is recorded as just over 250,000.
+The population aggregate data is 2011 UK census data sourced from [nomisweb](https://www.nomisweb.co.uk), for the London Borough of Tower Hamlets at middle-layer super output area (MSOA) resolution. MSOA corresponds to a subregion containing approximately 8,000 people. Tower Hamlets is split into 32 MSOAs and its total population is recorded as just over 250,000.
 
 For the purposes of this worked example we have preprocessed the census data into the following csv files:
 
-* [sexAgeEth.csv](data/sexAgeEth.csv) - count of persons by MSOA by sex by age band by ethnicity
-* [sexAgeYear.csv](data/sexAgeYear.csv) - count of persons by MSOA by sex by single year of age by ethnicity
+- [sexAgeEth.csv](data/sexAgeEth.csv) - count of persons by MSOA by sex by age band by ethnicity
+- [sexAgeYear.csv](data/sexAgeYear.csv) - count of persons by MSOA by sex by single year of age by ethnicity
 
 #### Categories:
 - MSOA: ONS code for the 32 MSOAs within Tower Hamlets
@@ -43,15 +43,17 @@ NB The categories for Ethnicity have been reduced slightly from the original cen
 
 #### Fertility/mortality rate data
 
-- fertility and mortality rate by ethnicity data, specific to Tower Hamlets. This is used to project the population forward in time by microsimulation.
-
-Fertility and mortality rate data is taken from the Ethpop database @Nik can you provide more background/detail?, and gives rates by ethnicity and single year of age, for the entire borough, but does not differentiate on any smaller geographical scale. 
+Fertility and mortality rate data is provided by the [NewETHPOP](www.ethpop.org) project, and gives rates by ethnicity and single year of age, for the entire borough, but does not differentiate on any smaller geographical scale. 
 
 There is significant variation in the rates for different ethnicities, and it is important that our microsimulation captures this.
 
+- [TowerHamletsFertility.csv](data/TowerHamletsFertility.csv) - annual fertility rate for (female) persons by age and ethnicity
+- [TowerHamletsMortality.csv](data/TowerHamletsMortality.csv.csv) - annual mortility rate for persons by age and ethnicity
+
+
 #### Geographical Data
 
-This data consists of shapefiles of MSOAs within Tower Hamlets, and is purely for geographic visualisation of the microsimulation results.
+The boundary data is sourced from [ONS](https://www.ons.gov.uk/methodology/geography/geographicalproducts/digitalboundaries) data consists of shapefiles for the 32 MSOAs within Tower Hamlets, and is purely for geographic visualisation of the microsimulation results.
 
 ### Methodology
 
@@ -105,9 +107,9 @@ See [microsimulation.R](R/microsimulation.R) for more detail. NB This computatio
 
 The code is contained in an R package. We recommend the use of the most recent version of RStudio and users will need sufficient admin privileges to install packages. 
 
-The code is also dependent on another github package `humanleague` which should be installed first. The following commands will install everything you need:
+The code is also dependent on another github package `humanleague`, version 1.0.1, which should be installed first. The following commands will install the two packages:
 ```
-> devtools::install_github("virgesmith/humanleague")
+> devtools::install_github("virgesmith/humanleague@1.0.1")
 > devtools::install_github("virgesmith/demographyMicrosim")
 ```
 The code also depends on some standard R packages, which - if not already present - can be installed like so:
