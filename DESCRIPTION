@@ -1,6 +1,6 @@
 Package: demographyMicrosim
 Title: Microsynthesis and microsimulation worked examples for demography
-Version: 0.0.0.9000
+Version: 1.0.0
 Authors@R: person("Andrew", "Smith", email = "a.p.smith@leeds.ac.uk", role = c("aut", "cre"))
 Description: Microsynthesis and microsimulation worked examples for demography.
 Depends: 
