@@ -43,13 +43,12 @@ NB The categories for Ethnicity have been reduced slightly from the original cen
 
 #### Fertility/mortality rate data
 
-Fertility and mortality rate data is provided by the [NewETHPOP](www.ethpop.org) project, and gives rates by ethnicity and single year of age, for the entire borough, but does not differentiate on any smaller geographical scale. 
+Fertility and mortality rate data is provided by the [NewETHPOP](www.ethpop.org) project, and gives rates by gender (mortality only), ethnicity and single year of age, for the entire borough, but does not differentiate on any smaller geographical scale. 
 
 There is significant variation in the rates for different ethnicities, and it is important that our microsimulation captures this.
 
 - [TowerHamletsFertility.csv](data/TowerHamletsFertility.csv) - annual fertility rate for (female) persons by age and ethnicity
-- [TowerHamletsMortality.csv](data/TowerHamletsMortality.csv.csv) - annual mortility rate for persons by age and ethnicity
-
+- [TowerHamletsMortality.csv](data/TowerHamletsMortality.csv.csv) - annual mortality rate for persons by gender by age and ethnicity
 
 #### Geographical Data
 
@@ -105,14 +104,20 @@ See [microsimulation.R](R/microsimulation.R) for more detail. NB This computatio
 
 ### Installation
 
-The code is contained in an R package. We recommend the use of the most recent version of RStudio and users will need sufficient admin privileges to install packages. 
+This R package should be installed directly from github. We recommend the use of the most recent version of RStudio and users will need sufficient admin privileges to install packages. 
 
-The code is also dependent on another github package `humanleague`, version 1.0.1, which should be installed first. The following commands will install the two packages:
+Firstly, if not already installed, you will need the `devtools` package to install packages from github.
+
+```
+> install.packages("devtools")
+```
+
+There is a dependency on another github package `humanleague`, version 1.0.1, which should be installed first. The following commands will install the both packages:
 ```
 > devtools::install_github("virgesmith/humanleague@1.0.1")
 > devtools::install_github("virgesmith/demographyMicrosim")
 ```
-The code also depends on some standard R packages, which - if not already present - can be installed like so:
+There are also dependencies on some standard R packages, which should automatically install by default. If for some reason they don't they can also be manually installed like so:
 ```
 > install.packages(c("data.table", "sf", "plotrix", "leaflet"))
 ```
@@ -121,7 +126,7 @@ The code also depends on some standard R packages, which - if not already presen
 
 Load the package and call the `microsynthesise()` function to generate a base population:
 ```
-> library(demographicMisrosim)
+> library(demographyMisrosim)
 > basePopulation = microsynthesise()
 Population:  254096 
 Starting microsynthesis...done
@@ -171,7 +176,7 @@ Projecting: T+10...done
 T+10 population 293492
 Overall simulation time(s):  4919.74568200111 
 ```
-The projection for 10 years is may take well over an hour, so it's definitely worth saving this population for later use:
+The projection for 10 years may take two hours or more depending on hardware, so it's definitely worth saving this population for later use:
 ```
 > write.csv(population2021, "population2021.csv", row.names=FALSE)
 ```
