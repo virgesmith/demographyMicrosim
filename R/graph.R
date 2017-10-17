@@ -24,8 +24,8 @@ pyramid = function(eth, population, title = "") {
     f[i] = nrow(population[Sex=="F" & Age>=ageLookup$LBound[i] & Age<=ageLookup$UBound[i] & Ethnicity==eth])/1000
   }
 
-  mcol<-color.gradient(c(0,0,0.5,1),c(0,0,0.5,1),c(1,1,0.5,1),length(ageLookup$Band))
-  fcol<-color.gradient(c(1,1,0.5,1),c(0.5,0.5,0.5,1),c(0.5,0.5,0.5,1),length(ageLookup$Band))
+  mcol<-"blue"
+  fcol<-"red"
   par(mar=pyramid.plot(m,f,labels=ageLookup$Band,
                        main=paste(title),lxcol=mcol,rxcol=fcol,
                        gap=1,space=0.5,unit="('000s)",show.values=F))
