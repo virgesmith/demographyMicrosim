@@ -43,7 +43,7 @@ NB The categories for Ethnicity have been reduced slightly from the original cen
 
 #### Fertility/mortality rate data
 
-Fertility and mortality rate data is provided by the [NewETHPOP](www.ethpop.org) project, and gives rates by gender (mortality only), ethnicity and single year of age, for the entire borough, but does not differentiate on any smaller geographical scale. 
+Fertility and mortality rate data is provided by the [NewETHPOP](http://www.ethpop.org) project, and gives rates by gender (mortality only), ethnicity and single year of age, for the entire borough, but does not differentiate on any smaller geographical scale. 
 
 There is significant variation in the rates for different ethnicities, and it is important that our microsimulation captures this.
 
@@ -98,7 +98,6 @@ See [microsimulation.R](R/microsimulation.R) for more detail. NB This computatio
 * `pyramid()` - generates a pyramid plot by age band and gender for members of the population of a specific ethnicity. See [graph.R](R/graph.R) for details.
 * `map()` - geographic visualisations of data derived from the microsyntheses. See [map.R](R/map.R) for details. 
 * `diversity()`, `growth()` - helper functions for calculating growth and diversity coefficients. See [utils.R](R/utils.R) for details. 
-
 
 ## Using the Package
 
