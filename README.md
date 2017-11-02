@@ -30,7 +30,7 @@ The population aggregate data is 2011 UK census data sourced from [nomisweb](htt
 For the purposes of this worked example we have preprocessed the census data into the following csv files:
 
 - [sexAgeEth.csv](data/sexAgeEth.csv) - count of persons by MSOA by sex by age band by ethnicity
-- [sexAgeYear.csv](data/sexAgeYear.csv) - count of persons by MSOA by sex by single year of age by ethnicity
+- [sexAgeYear.csv](data/sexAgeYear.csv) - count of persons by MSOA by sex by single year of age
 
 #### Categories:
 - MSOA: ONS code for the 32 MSOAs within Tower Hamlets
