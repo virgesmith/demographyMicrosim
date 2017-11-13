@@ -184,13 +184,13 @@ The projection for 10 years may take two hours or more depending on hardware, so
 The package provides convenient functions for generating graphs. For example, to reload the population projection and view the projected 2021 Bangladeshi population as a pyramid plot:
 ```
 > population2021 = as.data.table(read.csv("population2021.csv", stringsAsFactors = FALSE))
-> pyramid("BAN", population2021, "Bangladeshi - 2021 Projection")
+> pyramid("BAN", population2021)
 ```
 Which should look like this:
 
 ![](examples/BAN2021pyramid.png)
 
-_2021 Projected Bangladeshi population._
+_Figure 1. 2021 Projected Bangladeshi population._
 
 We can also now compute some summary statistics from the population to help us understand the population and how it has evolved.
 
@@ -206,7 +206,7 @@ Which results in
 
 ![](examples/growth2011_2021.png) 
 ###### Map tiles by Carto, under CC BY 3.0. Data by OpenStreetMap, under ODbL  
-_Map of projected population growth 2011-2021 (lower growth is blue and higher orange)._
+_Figure 2. Map of projected population growth 2011-2021. (Percentages are not annualised.)_
 
 It should be noted that the microsimulation is essential to arrive at a result like this - given only fertility and mortality data for the whole borough, we have been able to model growth at a higher geographical resolution thanks to the finer detail provided by census data, namely populations by ethnicity within each MSOA. 
 
