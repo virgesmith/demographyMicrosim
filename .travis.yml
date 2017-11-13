@@ -1,5 +1,5 @@
 
-# see https://docs.travis-ci.com/user/languages/r/ 
+# see https://docs.travis-ci.com/user/languages/r/
 
 language: r
 r:
@@ -27,9 +27,9 @@ r_packages:
   - sf
   - plotrix
   - leaflet
-  
+
 r_github_packages:
-  - virgesmith/humanleague
+  - virgesmith/humanleague@1.0.1
 
 notifications:
   email:
