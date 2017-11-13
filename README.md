@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/virgesmith/demographyMicrosim.png?branch=master)](https://travis-ci.org/virgesmith/demographyMicrosim)
 [![License](http://img.shields.io/badge/license-GPL%20%28%3E=%202%29-brightgreen.svg?style=flat)](http://www.gnu.org/licenses/gpl-3.0.html) 
+[![DOI](https://zenodo.org/badge/97580490.svg)](https://zenodo.org/badge/latestdoi/97580490)
 
 
 ## The Examples
