@@ -4,6 +4,7 @@
 [![License](http://img.shields.io/badge/license-GPL%20%28%3E=%202%29-brightgreen.svg?style=flat)](http://www.gnu.org/licenses/gpl-3.0.html) 
 [![DOI](https://zenodo.org/badge/97580490.svg)](https://zenodo.org/badge/latestdoi/97580490)
 
+This repo contains material to accompany the article '[Microsimulation for Demography](http://www.australianpopulationstudies.org/index.php/aps/article/view/14)' in _Australian Population Studies_.
 
 ## The Examples
 
@@ -216,4 +217,6 @@ This projection omits crucial factors (most notably migration) in order to keep 
 
 Readers are encouraged to clone this repo, adapt/extend it for their own use and/or improve it. Pull requests are welcomed!
 
+## References
 
+LOMAX, Nik; SMITH, Andrew. Microsimulation for demography. Australian Population Studies, [S.l.], v. 1, n. 1, p. 73-85, nov. 2017. ISSN 2208-8482
