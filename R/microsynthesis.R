@@ -48,9 +48,9 @@ microsynthesise = function() {
     geo_labels = dimnames(m1)$MSOA
     sex_labels = dimnames(m1)$Sex
     eth_labels = dimnames(m1)$Ethnicity
-    age_labels = dimnames(m2)$Age
+    age_labels = as.numeric(dimnames(m2)$Age) # Ensure age is numeric
 
-        # microsynthesis (if people exist in MSOA/sex/age combination)
+    # microsynthesis (if people exist in this age band)
     if (sum(m1)>0) {
       res = humanleague::qis(list(c(1,2,3),c(1,2,4)), list(m1,m2))
       stopifnot(res$conv)
