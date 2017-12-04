@@ -27,7 +27,9 @@ microsimulate = function(synpop, years) {
   stopifnot(years>0)
 
   # makes use of the following lazy-loaded package data: TowerHamletsFertility, TowerHamletsMortality
-
+  # to make vectorisation easier, we include males in fertility table (obviously with zero rate)
+  ftable = xtabs(Rate~Sex+Age+Ethnicity, TowerHamletsFertility)
+  mtable = xtabs(Rate~Sex+Age+Ethnicity, TowerHamletsMortality)
   # two status columns will be added to the population to flag birth and death events
 
   # perform the microsimulation
@@ -40,26 +42,12 @@ microsimulate = function(synpop, years) {
     synpop$B = rep(0,n)
     synpop$D = rep(0,n)
 
-    # fetility and mortality are independent so need different draws
+    # fertility and mortality are independent so need different draws
     xf = runif(n) # fertility: n uniform random variates in (0,1)
     xm = runif(n) # mortality: n uniform random variates in (0,1)
-    fr=rep(-1,n)
-    mr=rep(-1,n)
-    for (i in 1:n) {
-      # births
-      if (synpop[i,]$Sex == "F") {
-        # pick correct fertility rate for age and ethnicity
-        fr[i] = TowerHamletsFertility[TowerHamletsFertility$Age==synpop[i,]$Age &
-                                      TowerHamletsFertility$Ethnicity==synpop[i,]$Ethnicity,]$Rate
-      }
+    fr=ftable[cbind(synpop$Sex, synpop$Age, synpop$Ethnicity)]
+    mr=mtable[cbind(synpop$Sex, synpop$Age, synpop$Ethnicity)]
 
-      # deaths
-      # pick correct mortality rate for sex, age and ethnicity
-      mr[i] = TowerHamletsMortality[TowerHamletsMortality$Sex==synpop[i,]$Sex &
-                                    TowerHamletsMortality$Age==synpop[i,]$Age &
-                                    TowerHamletsMortality$Ethnicity==synpop[i,]$Ethnicity,]$Rate
-      # death occurs when the random variate is lower than the fertility rate
-    }
     # births/deaths occur when the random variate is lower than the fertility/mortality rate
     synpop$B = ifelse(fr >= xf, 1, 0)
     synpop$D = ifelse(mr >= xm, 1, 0)
