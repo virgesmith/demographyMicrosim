@@ -139,7 +139,10 @@ This will take around 1 minute, depending on the hardware used. We can save this
 ```
 (The final argument stops R from inserting an index column into the saved data, which we do not require.) 
 
-
+NB when loading pre-saved data, it must be loaded as a data.table (as opposed to the default data.frame) in order to work correctly, e.g.
+```
+> basePopulation = as.data.table(read.csv("basePopulation.csv", row.names=FALSE))
+```
 ### Step 2 - Microsimulation (Projection)
 
 Assuming you have already carried out the microsynthesis step above, we can project the population 10 years forward to 2021 using the following:
@@ -147,37 +150,37 @@ Assuming you have already carried out the microsynthesis step above, we can proj
 > population2021=microsimulate(basePopulation, 10)
 base population: 254096 
 Projecting: T+1...done
-T+1 population 258258
-Overall simulation time(s):  483.934171915054 
+T+1 population 258286
+Overall simulation time(s):  0.499080896377563 
 Projecting: T+2...done
-T+2 population 262457
-Overall simulation time(s):  998.115595817566 
+T+2 population 262500
+Overall simulation time(s):  1.24033451080322 
 Projecting: T+3...done
-T+3 population 266636
-Overall simulation time(s):  1478.55320763588 
+T+3 population 266477
+Overall simulation time(s):  1.96326041221619 
 Projecting: T+4...done
-T+4 population 270776
-Overall simulation time(s):  1946.82198834419 
+T+4 population 270454
+Overall simulation time(s):  2.60470032691956 
 Projecting: T+5...done
-T+5 population 274769
-Overall simulation time(s):  2412.15490603447 
+T+5 population 274550
+Overall simulation time(s):  3.25180697441101 
 Projecting: T+6...done
-T+6 population 278822
-Overall simulation time(s):  2883.71858787537 
+T+6 population 278437
+Overall simulation time(s):  3.92754030227661 
 Projecting: T+7...done
-T+7 population 282631
-Overall simulation time(s):  3374.62547659874 
+T+7 population 282347
+Overall simulation time(s):  4.7733268737793 
 Projecting: T+8...done
-T+8 population 286393
-Overall simulation time(s):  3880.97138023376 
+T+8 population 286290
+Overall simulation time(s):  5.45123076438904 
 Projecting: T+9...done
-T+9 population 289969
-Overall simulation time(s):  4399.07802438736 
+T+9 population 289911
+Overall simulation time(s):  6.21706819534302 
 Projecting: T+10...done
-T+10 population 293492
-Overall simulation time(s):  4919.74568200111 
+T+10 population 293501
+Overall simulation time(s):  6.9142210483551 
 ```
-The projection for 10 years may take two hours or more depending on hardware, so it's definitely worth saving this population for later use:
+The projection for 10 years ~may take two hours or more depending on hardware, so it's definitely worth saving this population for later use~ is now vectorised and runs hundreds of times faster, but the results can be saved like so:
 ```
 > write.csv(population2021, "population2021.csv", row.names=FALSE)
 ```
