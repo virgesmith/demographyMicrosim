@@ -19,12 +19,7 @@ microsynthesise = function() {
   cat(paste("Population: ", sum(sexAgeEth$Persons), "\n"))
   cat("Starting microsynthesis...")
 
-  # Generate aggregate totals for the four categories
-  msoa=aggregate(sexAgeEth$Persons, by=list(sexAgeEth$MSOA), FUN=sum)
-  sex=aggregate(sexAgeEth$Persons, by=list(sexAgeEth$Sex), FUN=sum)
   age=aggregate(sexAgeEth$Persons, by=list(sexAgeEth$AgeBand), FUN=sum)
-  eth=aggregate(sexAgeEth$Persons, by=list(sexAgeEth$Ethnicity), FUN=sum)
-
   # mapping from age bands to age ranges
   ageLookup=data.table(Band=c("0-4","5-7","8-9","10-14","15","16-17","18-19","20-24","25-29","30-34","35-39","40-44","45-49","50-54","55-59","60-64","65-69","70-74","75-79","80-84","85+"),
                        LBound=c(0,5,8,10,15,16,18,20,25,30,35,40,45,50,55,60,65,70,75,80,85),
@@ -34,37 +29,38 @@ microsynthesise = function() {
   n = sum(sexAgeYear$Persons)
 
   # initialise population table
-  synpop=data.table(MSOA=rep("",n), Sex=rep("",n), Age=rep(-1,n), Ethnicity=rep("",n))
-
-  index = 1L
+  #synpop=data.table(MSOA=rep("",n), Sex=rep("",n), Age=rep(-1,n), Ethnicity=rep("",n))
+  synpop=data.table()
 
   # microsim to get sex-age-eth expanded to single year of age, preserving marginal totals in area, sex, age band and ethnicity
 
-  # loop over MSOAs
-  for (a in msoa$Group.1) {
-    # loop over genders
-    for (s in sex$Group.1) {
-      # loop over age bands
-      for (b in age$Group.1) {
-        # marginal labels
-        l1 = sexAgeEth[sexAgeEth$MSOA==a & sexAgeEth$Sex==s & sexAgeEth$AgeBand==b,]$Ethnicity
-        l2 = sexAgeYear[sexAgeYear$MSOA==a & sexAgeYear$Sex==s & sexAgeYear$Age >= ageLookup[Band==b]$LBound & sexAgeYear$Age <= ageLookup[Band==b]$UBound,]$Age
-        # marginal frequencies
-        m1 = sexAgeEth[sexAgeEth$MSOA==a & sexAgeEth$Sex==s & sexAgeEth$AgeBand==b,]$Persons
-        m2 = sexAgeYear[sexAgeYear$MSOA==a & sexAgeYear$Sex==s & sexAgeYear$Age >= ageLookup[Band==b]$LBound & sexAgeYear$Age <= ageLookup[Band==b]$UBound,]$Persons
-        # microsynthesis (if people exist in MSOA/sex/age combination)
-        if (sum(m1)>0) {
-          res = humanleague::synthPop(list(m1,m2))
-          # insert into the main population
-          for (i in 1:nrow(res$pop)) {
-            set(synpop,index,"MSOA", a)
-            set(synpop,index,"Sex", s)
-            set(synpop,index,"Age", l2[res$pop$C1[i]+1])
-            set(synpop,index,"Ethnicity", l1[res$pop$C0[i]+1])
-            index = index + 1L
-          }
-        }
-      }
+  # for expediency we do separate mcicrosyntheses for each age band. alternative would be to do a global seeded microsynthesis,
+  # forbidding states where age is not within age band (e.g. 7 is only in "5-7". this approach would be far slower due to
+  # requiring IPF to generate the sampling distribution.
+
+  # loop over age bands
+  for (b in age$Group.1) {
+    # m1 is Geog by Sex by Ethnicity for a single age band
+    m1 = xtabs(Persons~MSOA+Sex+Ethnicity, sexAgeEth[sexAgeEth$AgeBand==b,])
+    # m2 is Geog by Sex by Age for ages within the band
+    m2 = xtabs(Persons~MSOA+Sex+Age, sexAgeYear[sexAgeYear$Age >= ageLookup[Band==b]$LBound & sexAgeYear$Age <= ageLookup[Band==b]$UBound,])
+    # labels
+    geo_labels = dimnames(m1)$MSOA
+    sex_labels = dimnames(m1)$Sex
+    eth_labels = dimnames(m1)$Ethnicity
+    age_labels = as.numeric(dimnames(m2)$Age) # Ensure age is numeric
+
+    # microsynthesis (if people exist in this age band)
+    if (sum(m1)>0) {
+      res = humanleague::qis(list(c(1,2,3),c(1,2,4)), list(m1,m2))
+      stopifnot(res$conv)
+      table = humanleague::flatten(res$result, c("MSOA", "Sex", "Ethnicity", "Age"))
+      # give meaningful names to what are essentially array index values
+      table$MSOA = geo_labels[table$MSOA]
+      table$Sex = sex_labels[table$Sex]
+      table$Age = age_labels[table$Age]
+      table$Ethnicity = eth_labels[table$Ethnicity]
+      synpop = rbind(synpop, table)
     }
   }
 
